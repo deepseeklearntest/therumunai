@@ -1,0 +1,35 @@
+name: pr-title
+
+# We squash-merge using the PR title, so the title itself must be a valid
+# Conventional Commit. Required status check — see docs/BRANCH_PROTECTION.md.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  pull-requests: read
+
+jobs:
+  pr-title:
+    name: pr-title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR title is a Conventional Commit
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            chore
+            ci
+            refactor
+            test
+            perf
+            build
+            style
+            revert
+          requireScope: false

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🔒 Report a security vulnerability
+    url: https://github.com/deepseeklearntest/therumunai/security/advisories/new
+    about: Please report security issues privately, not as public issues. See SECURITY.md.
+  - name: 💬 Questions & discussion
+    url: https://github.com/deepseeklearntest/therumunai/discussions
+    about: Ask questions or discuss ideas before filing a feature request.
+  - name: 📜 Read the contribution guide
+    url: https://github.com/deepseeklearntest/therumunai/blob/main/CONTRIBUTING.md
+    about: How to contribute, branch naming, Conventional Commits, and the CLA.

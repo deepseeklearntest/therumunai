@@ -1,0 +1,21 @@
+{
+  "ignorePatterns": [
+    { "pattern": "^https?://localhost" },
+    { "pattern": "^https?://(www\\.)?example\\.com" },
+    { "pattern": "^https://github.com/deepseeklearntest/therumunai" }
+  ],
+  "replacementPatterns": [
+    { "pattern": "^../", "replacement": "/" },
+    { "pattern": "^./", "replacement": "/" }
+  ],
+  "httpHeaders": [
+    {
+      "urls": ["https://github.com", "https://www.gnu.org"],
+      "headers": { "Accept": "text/html", "User-Agent": "markdown-link-check" }
+    }
+  ],
+  "timeout": "20s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "aliveStatusCodes": [200, 206, 429]
+}

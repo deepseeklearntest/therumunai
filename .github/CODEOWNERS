@@ -1,0 +1,29 @@
+# CODEOWNERS — who must review what.
+# Listed owners are automatically requested for review and (with branch protection's
+# "Require review from Code Owners") must approve before merge.
+#
+# Replace @therumunai-stewards / @therumunai-maintainers with real GitHub usernames or
+# teams once they exist. Until then, the repository steward is the effective owner.
+
+# Default: everything requires steward review.
+*                           @therumunai-stewards
+
+# Higher-scrutiny paths (two-reviewer expectation — see GOVERNANCE.md):
+
+# Database schema & spatial data.
+/db/                        @therumunai-stewards @therumunai-maintainers
+
+# Sanitized infrastructure example — must never leak real values.
+/deploy/                    @therumunai-stewards
+
+# CI, gates, and repository automation.
+/.github/                   @therumunai-stewards
+
+# Licensing & contributor agreement.
+/LICENSE                    @therumunai-stewards
+/docs/CLA.md                @therumunai-stewards
+
+# Product direction & operating guidance.
+/docs/PRD.md                @therumunai-stewards
+/CLAUDE.md                  @therumunai-stewards
+/GOVERNANCE.md              @therumunai-stewards
