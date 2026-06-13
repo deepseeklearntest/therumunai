@@ -1,18 +1,8 @@
 {
+  "//": "Blocking CI check validates RELATIVE/internal doc links (the real risk: broken file references). External URLs are ignored here because CI runners hit rate limits and datacenter-IP blocks (e.g. img.shields.io, small sites) that flake regardless of correctness. Add a separate, non-blocking scheduled job if external link-rot detection is wanted.",
   "ignorePatterns": [
-    { "pattern": "^https?://localhost" },
-    { "pattern": "^https?://(www\\.)?example\\.com" },
-    { "pattern": "^https://github.com/deepseeklearntest/therumunai" }
-  ],
-  "replacementPatterns": [
-    { "pattern": "^../", "replacement": "/" },
-    { "pattern": "^./", "replacement": "/" }
-  ],
-  "httpHeaders": [
-    {
-      "urls": ["https://github.com", "https://www.gnu.org"],
-      "headers": { "Accept": "text/html", "User-Agent": "markdown-link-check" }
-    }
+    { "pattern": "^https?://" },
+    { "pattern": "^mailto:" }
   ],
   "timeout": "20s",
   "retryOn429": true,
