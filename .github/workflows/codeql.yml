@@ -1,0 +1,59 @@
+name: codeql
+
+# Security scanning. Activates once JavaScript/TypeScript application code lands.
+# Until then the analysis job is skipped (there is no compiled/source code to scan).
+# Add "CodeQL" as a required status check when code exists — see docs/BRANCH_PROTECTION.md.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "27 3 * * 1" # weekly, Monday 03:27 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    name: detect-code
+    runs-on: ubuntu-latest
+    outputs:
+      has_code: ${{ steps.detect.outputs.has_code }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: detect
+        name: Detect JS/TS sources
+        run: |
+          if git ls-files '*.js' '*.jsx' '*.ts' '*.tsx' | grep -q .; then
+            echo "has_code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_code=false" >> "$GITHUB_OUTPUT"
+            echo "No JS/TS source yet — CodeQL analysis skipped (foundation phase)."
+          fi
+
+  analyze:
+    name: analyze
+    needs: detect
+    if: needs.detect.outputs.has_code == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript-typescript"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:${{ matrix.language }}"

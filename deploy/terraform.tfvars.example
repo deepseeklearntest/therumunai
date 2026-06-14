@@ -1,0 +1,27 @@
+# Example variable values for the Therumunai infrastructure reference.
+# Copy to `terraform.tfvars` and replace with YOUR OWN values.
+# `terraform.tfvars` is git-ignored — never commit real values, ARNs, or secrets.
+
+# AWS region to deploy into (Mumbai region used as an example).
+aws_region = "ap-south-1"
+
+# A globally-unique name prefix for resources (lowercase, no spaces).
+project_name = "therumunai-example"
+
+# Deployment environment label: dev | staging | prod
+environment = "dev"
+
+# S3 bucket name for citizen photo uploads (must be globally unique).
+photos_bucket_name = "REPLACE_ME-therumunai-photos-example"
+
+# Database sizing. MVP cost guardrail: start small (t4g.micro RDS PostGIS),
+# move to Aurora Serverless v2 once traffic justifies it.
+db_instance_class = "db.t4g.micro"
+db_name           = "therumunai"
+
+# Do NOT put the database password here. Source it from AWS Secrets Manager / SSM
+# at apply time. This placeholder exists only to document the variable.
+# db_password is intentionally omitted — supply via TF_VAR_db_password or a secret store.
+
+# Public site domain (placeholder).
+site_domain = "example.com"

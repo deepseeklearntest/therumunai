@@ -1,0 +1,53 @@
+name: "🐛 Bug report"
+description: Report something that isn't working as expected.
+title: "fix: <short description>"
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. **Do not report security vulnerabilities here** —
+        follow [SECURITY.md](../blob/main/SECURITY.md) instead.
+        Please do **not** include any personal data in this report.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug and what you expected instead.
+      placeholder: When I submit a report from Coimbatore, the zone is tagged incorrectly…
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to '...'
+        2. Tap '...'
+        3. See error
+    validations:
+      required: true
+  - type: input
+    id: area
+    attributes:
+      label: Affected area
+      description: e.g. report form, map dashboard, geo-tagging, i18n, infra example
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Device, OS, browser, and version where you saw this.
+      placeholder: Android 14, Chrome 125, Pixel 7
+    validations:
+      required: false
+  - type: checkboxes
+    id: confirms
+    attributes:
+      label: Confirmations
+      options:
+        - label: This is not a security vulnerability (those go through SECURITY.md).
+          required: true
+        - label: I have not included any personal data in this report.
+          required: true

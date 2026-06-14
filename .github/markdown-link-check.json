@@ -1,0 +1,11 @@
+{
+  "//": "Blocking CI check validates RELATIVE/internal doc links (the real risk: broken file references). External URLs are ignored here because CI runners hit rate limits and datacenter-IP blocks (e.g. img.shields.io, small sites) that flake regardless of correctness. Add a separate, non-blocking scheduled job if external link-rot detection is wanted.",
+  "ignorePatterns": [
+    { "pattern": "^https?://" },
+    { "pattern": "^mailto:" }
+  ],
+  "timeout": "20s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "aliveStatusCodes": [200, 206, 429]
+}
