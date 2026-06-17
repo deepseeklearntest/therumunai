@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node esbuild.config.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "echo 'No tests yet'"
+    "test": "node --test"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.577.0",

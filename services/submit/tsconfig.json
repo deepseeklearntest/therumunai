@@ -2,7 +2,11 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    // Allows *.test.ts files to import siblings by their real .ts path, which
+    // Node's runtime type-stripping requires. Safe because typecheck is --noEmit
+    // and the Lambda bundle is produced by esbuild, not tsc.
+    "allowImportingTsExtensions": true
   },
   "include": ["src/**/*"]
 }
