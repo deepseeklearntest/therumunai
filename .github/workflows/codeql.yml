@@ -22,7 +22,7 @@ jobs:
     outputs:
       has_code: ${{ steps.detect.outputs.has_code }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: detect
         name: Detect JS/TS sources
         run: |
@@ -46,7 +46,7 @@ jobs:
       matrix:
         language: ["javascript-typescript"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
