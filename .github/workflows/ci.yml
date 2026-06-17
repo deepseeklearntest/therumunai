@@ -74,3 +74,24 @@ jobs:
       - name: Build
         if: steps.detect.outputs.has_node == 'true'
         run: npm run --if-present build
+
+  terraform:
+    name: terraform-validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.0"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive deploy
+
+      - name: Terraform Init
+        run: cd deploy && terraform init -backend=false
+
+      - name: Terraform Validate
+        run: cd deploy && terraform validate

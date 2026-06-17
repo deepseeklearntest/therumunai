@@ -5,7 +5,7 @@
 > [nammakasa.in](https://nammakasa.in) initiative.
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](./LICENSE)
-[![Status: Foundation](https://img.shields.io/badge/status-foundation-orange.svg)](./docs/PRD.md)
+[![Status: Infrastructure](https://img.shields.io/badge/status-infrastructure--phase--1-blue.svg)](./docs/PRD.md)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://www.conventionalcommits.org)
 [![PRs: CLA required](https://img.shields.io/badge/PRs-CLA%20required-red.svg)](./docs/CLA.md)
 
@@ -14,9 +14,10 @@ broken road, a dead streetlight, or waterlogging — in under a minute, with **n
 no sign-up, and no personal data**. Each report is auto-tagged to the correct municipal
 zone using geospatial boundaries, so the data is useful to the people who can act on it.
 
-> ⚠️ **Project status: Foundation phase.** This repository currently contains the
-> product requirements, governance, and contribution gates. The application itself
-> (infrastructure, backend, frontend) is on the roadmap — see [`docs/PRD.md`](./docs/PRD.md).
+> ⚠️ **Project status: Phase 1 (Infrastructure) complete.** The directory layout,
+> npm workspaces, and core AWS infrastructure definitions are in place. The Next.js
+> frontend application is currently represented as a stub workspace under `apps/web`
+> and will land in Phase 3. See [`docs/PRD.md`](./docs/PRD.md).
 
 ---
 
@@ -75,9 +76,27 @@ docs/       PRD, governance, ADRs             .github/   workflows, templates, C
 
 ## Getting started
 
-> Application code has not landed yet. Once it does, setup steps will live here and in
-> [`CONTRIBUTING.md`](./CONTRIBUTING.md). For now, this repo is read-and-review:
-> the PRD, governance, and contribution rules.
+This repository uses npm workspaces to manage its packages.
+
+### Prerequisites
+
+- Node.js >= 20.x (enforced via `.nvmrc`)
+- npm >= 10.x
+
+### Setup
+
+```bash
+# Install dependencies across all workspaces
+npm install
+
+# Run type checking for all packages
+npm run typecheck
+
+# Build the Lambda submit service
+npm run build
+```
+
+See the [sanitized Terraform deployment guide](./deploy/README.md) for provisioning instructions.
 
 ## Contributing
 

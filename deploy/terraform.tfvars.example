@@ -18,10 +18,28 @@ photos_bucket_name = "REPLACE_ME-therumunai-photos-example"
 # move to Aurora Serverless v2 once traffic justifies it.
 db_instance_class = "db.t4g.micro"
 db_name           = "therumunai"
+db_username       = "therumunai_admin"
 
-# Do NOT put the database password here. Source it from AWS Secrets Manager / SSM
-# at apply time. This placeholder exists only to document the variable.
-# db_password is intentionally omitted — supply via TF_VAR_db_password or a secret store.
+# Note: do NOT put the database password here. Source it from environment
+# using TF_VAR_db_password or a secret store.
+# db_password = "..." (intentionally omitted)
+
+# Whether the database should be publicly accessible.
+# Recommended: false in prod. Can set to true temporarily in dev for schema/seed setup.
+db_publicly_accessible = false
 
 # Public site domain (placeholder).
 site_domain = "example.com"
+
+# Allowed CORS origins (Next.js client origin).
+cors_allowed_origins = ["http://localhost:3000"]
+
+# Maximum size in megabytes for citizen photo uploads.
+photo_max_size_mb = 10
+
+# Monthly budget limit in USD and notification email for AWS Budgets.
+monthly_budget_usd = 25
+alert_email        = "alerts@example.com"
+
+# Enable basic AWS WAF rate-limiting for the API Gateway endpoint.
+enable_waf = true
