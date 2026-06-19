@@ -27,7 +27,8 @@ The Lambda handler already exists and dictates the schema. **Do not drift from t
 ## 2. Schema design
 
 ### `municipal_zones`
-```
+
+```text
 id           serial PRIMARY KEY
 city         text NOT NULL              -- 'Chennai' | 'Coimbatore'
 zone_name    text NOT NULL             -- EN, e.g. 'Zone 5 - Anna Nagar'
@@ -36,10 +37,12 @@ geom         geometry(MultiPolygon, 4326) NOT NULL
 UNIQUE (city, zone_name)
 GIST index on geom
 ```
+
 - 20 rows: GCC Zones 1–15 + CCMC East/West/North/South/Central.
 
 ### `reports`
-```
+
+```text
 id         uuid PRIMARY KEY DEFAULT gen_random_uuid()
 category   text NOT NULL CHECK (category IN ('garbage','road','streetlight','drainage'))
 photo_key  text NOT NULL
@@ -51,9 +54,11 @@ created_at timestamptz NOT NULL DEFAULT now()
 GIST index on geom
 btree index on (created_at), (city, category)  -- dashboard filters
 ```
+
 - **No PII, no IP, no FK to zones** (HARD RULE 1). City/zone are denormalized text snapshots so historical reports survive future boundary edits, and the public dataset reads with no join.
 
 ### Zone-tagging query (the "sample `ST_Contains`" PRD deliverable)
+
 ```sql
 SELECT city, zone_name
 FROM municipal_zones

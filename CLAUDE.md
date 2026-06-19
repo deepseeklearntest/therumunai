@@ -122,21 +122,27 @@ After the personas speak, always close with:
 After completing every **plan execution task** (i.e., any task that modifies source code, infrastructure, or configuration — not documentation-only or research tasks), produce a visible **Post-Execution Report** with written answers to each question below. Do not skip this or treat it as internal reflection — the answers must appear in your response.
 
 #### Security
+
 - Did you build this the most secure way? If not, what trade-off did you accept and why?
 
 #### Efficiency
+
 - Did you build this in the most efficient way? Are there obvious performance cliffs?
 
 #### Regressions
+
 - What regressions could this introduce? List affected areas and blast radius.
 
 #### Test Coverage
+
 - What tests do we need to write before we ship this? Be specific (unit, integration, e2e, edge cases).
 
 #### Future Self *(maintainability check)*
+
 - Will this be obvious to a contributor reading it 6 months from now? Any tech debt introduced intentionally?
 
 #### Hard-Rules Compliance Gate
+
 - Verify the change does **not** violate any of the [Hard Rules](#hard-rules--do-not-violate)
   defined in this file. Explicitly confirm: no secrets/PII, no real infra, disclosure
   footer intact, bilingual strings present, boundary fallback working.
