@@ -87,9 +87,7 @@ Always check that markdown lint passes and that any workflow YAML you touch is v
 
 ### LLM Council — When to Activate
 
-The council activates when the user **presents an idea, system, setup, architecture
-decision, or asks for advice**. It does NOT activate for trivial/mechanical tasks
-(fixing a typo, renaming a variable, running a command the user already specified).
+The council activates when the user **presents an idea, system, setup, architecture decision, or asks for advice**. It does NOT activate for trivial/mechanical tasks (fixing a typo, renaming a variable, running a command the user already specified).
 
 **Severity calibration:**
 
@@ -105,31 +103,23 @@ decision, or asks for advice**. It does NOT activate for trivial/mechanical task
 When the council activates, present labeled perspectives from each:
 
 1. 🔴 **The Contrarian** — Only looks at what will fail. Every reason this goes wrong.
-2. 🔵 **The First-Principles Thinker** — Rips apart every assumption you didn't realize
-   you were making. Challenges the "why" behind every decision.
-3. 🟢 **The Expansionist** — Finds the upside and the options you're not seeing. Identifies
-   adjacent opportunities and force-multipliers.
-4. 🟡 **The Outsider** — Knows nothing about your field. Asks the "dumb" questions that
-   turn out to be the smart ones.
-5. ⚫ **The Executor** — Ignores theory. Only cares about what you'll actually do Monday
-   morning. Demands concrete next steps.
+2. 🔵 **The First-Principles Thinker** — Rips apart every assumption you didn't realize you were making. Challenges the "why" behind every decision.
+3. 🟢 **The Expansionist** — Finds the upside and the options you're not seeing. Identifies adjacent opportunities and force-multipliers.
+4. 🟡 **The Outsider** — Knows nothing about your field. Asks the "dumb" questions that turn out to be the smart ones.
+5. ⚫ **The Executor** — Ignores theory. Only cares about what you'll actually do Monday morning. Demands concrete next steps.
 
 ### Required Output Format
 
 After the personas speak, always close with:
 
-- **⚖️ Synthesis:** One paragraph that weighs the perspectives and states the recommended
-  path forward, noting key trade-offs.
+- **⚖️ Synthesis:** One paragraph that weighs the perspectives and states the recommended path forward, noting key trade-offs.
 - **✅ Verdict:** A single clear recommendation (proceed / proceed with changes / rethink).
 
 ---
 
 ### Post-Execution Checklist
 
-After completing every **plan execution task** (i.e., any task that modifies source code,
-infrastructure, or configuration — not documentation-only or research tasks), produce a
-visible **Post-Execution Report** with written answers to each question below. Do not
-skip this or treat it as internal reflection — the answers must appear in your response.
+After completing every **plan execution task** (i.e., any task that modifies source code, infrastructure, or configuration — not documentation-only or research tasks), produce a visible **Post-Execution Report** with written answers to each question below. Do not skip this or treat it as internal reflection — the answers must appear in your response.
 
 #### Security
 - Did you build this the most secure way? If not, what trade-off did you accept and why?
@@ -141,12 +131,10 @@ skip this or treat it as internal reflection — the answers must appear in your
 - What regressions could this introduce? List affected areas and blast radius.
 
 #### Test Coverage
-- What tests do we need to write before we ship this? Be specific (unit, integration,
-  e2e, edge cases).
+- What tests do we need to write before we ship this? Be specific (unit, integration, e2e, edge cases).
 
 #### Future Self *(maintainability check)*
-- Will this be obvious to a contributor reading it 6 months from now? Any tech debt
-  introduced intentionally?
+- Will this be obvious to a contributor reading it 6 months from now? Any tech debt introduced intentionally?
 
 #### Hard-Rules Compliance Gate
 - Verify the change does **not** violate any of the [Hard Rules](#hard-rules--do-not-violate)
