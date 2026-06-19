@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { buildZoneTagQuery, resolveZone } from "./zone.ts";
+import { buildZoneTagQuery, resolveZone } from "./zone.js";
 
 test("buildZoneTagQuery binds longitude before latitude (PostGIS X,Y order)", () => {
   const { values } = buildZoneTagQuery(13.0827, 80.2707); // lat, lng

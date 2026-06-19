@@ -6,12 +6,13 @@
   "scripts": {
     "migrate": "node run-migrations.mjs",
     "seed": "node generate-placeholder-zones.mjs",
-    "test": "node --test"
+    "test": "node --import tsx --test \"test/**/*.test.ts\""
   },
   "dependencies": {
     "pg": "^8.12.0"
   },
   "devDependencies": {
-    "@types/pg": "^8.11.6"
+    "@types/pg": "^8.11.6",
+    "tsx": "^4.16.0"
   }
 }

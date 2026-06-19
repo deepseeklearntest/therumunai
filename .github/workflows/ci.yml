@@ -21,6 +21,27 @@ jobs:
   ci:
     name: ci
     runs-on: ubuntu-latest
+    # PostGIS service backs the db + submit integration tests. Anonymous local
+    # dev credentials only — no production secrets (HARD RULE 1).
+    services:
+      postgres:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_PASSWORD: devpass
+          POSTGRES_DB: therumunai
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DB_HOST: localhost
+      DB_PORT: "5432"
+      DB_NAME: therumunai
+      DB_USER: postgres
+      DB_PASS: devpass
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -66,6 +87,10 @@ jobs:
       - name: Typecheck
         if: steps.detect.outputs.has_node == 'true'
         run: npm run --if-present typecheck
+
+      - name: Run database migrations
+        if: steps.detect.outputs.has_node == 'true'
+        run: npm run --if-present migrate -w db
 
       - name: Test
         if: steps.detect.outputs.has_node == 'true'
