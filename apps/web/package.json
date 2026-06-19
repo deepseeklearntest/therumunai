@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Next.js dev server stub'",
+    "build": "echo 'Next.js build stub'",
+    "start": "echo 'Next.js start stub'",
+    "lint": "echo 'Next.js lint stub'"
+  }
+}

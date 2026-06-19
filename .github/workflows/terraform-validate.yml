@@ -1,0 +1,39 @@
+name: terraform-validate
+
+# Runs automatically when changes are pushed to files in the deploy/ directory.
+# Useful to verify sanitized examples maintain syntax correctness.
+
+on:
+  push:
+    paths:
+      - "deploy/**"
+      - ".github/workflows/terraform-validate.yml"
+  pull_request:
+    paths:
+      - "deploy/**"
+      - ".github/workflows/terraform-validate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive deploy
+
+      - name: Terraform Init
+        run: cd deploy && terraform init -backend=false
+
+      - name: Terraform Validate
+        run: cd deploy && terraform validate

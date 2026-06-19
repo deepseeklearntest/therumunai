@@ -17,18 +17,15 @@ the platform.
 
 The target architecture from the [PRD](../docs/PRD.md):
 
-- **S3 bucket** for citizen-uploaded photos (public-read images; direct upload via
-  backend-issued presigned URLs).
-- **API Gateway + AWS Lambda** for anonymous JSON submission and zone-tagging logic.
-- **PostgreSQL + PostGIS** database — start on a small `t4g.micro` RDS instance for the
-  MVP (cost guardrail), graduate to Aurora Serverless v2 later.
-- **Frontend hosting** via Amplify or S3 + CloudFront.
+- **S3 Bucket (`aws_s3_bucket.photos`)**: Stores citizen-uploaded photos securely, utilizing CORS configuration to allow direct uploads from allowed frontend domains. Block public access is fully enabled to prevent direct S3 leaks; objects are instead delivered via CloudFront.
+- **CloudFront CDN (`aws_cloudfront_distribution.cdn`)**: Serving cached photos directly from the S3 bucket using Origin Access Control (OAC), ensuring S3 remains private.
+- **API Gateway (`aws_apigatewayv2_api.reports`)**: Serverless HTTP API exposing routes `/presign`, `POST /reports`, and `GET /reports` mapped to our Lambda function.
+- **AWS Lambda (`aws_lambda_function.submit`)**: Runs inside the default VPC subnets, connects securely to RDS, holds environment configuration, and signs S3 upload requests.
+- **PostgreSQL + PostGIS (`aws_db_instance.postgis`)**: Managed RDS database instance using a burstable arm64 `db.t4g.micro` class to respect the cost guardrail. Contains dynamic rules for dev vs. prod access controls.
+- **WAFv2 (`aws_wafv2_web_acl.api`)**: Standard rate-limiting rule configuration (e.g., 100 requests per 5 minutes per client IP) directly associated with API Gateway.
+- **Budget Alarm (`aws_budgets_budget.monthly`)**: Configurable spending budget in USD with active email notification triggers at 80% and 100% actual budget usage.
 
-> The concrete resource definitions are intentionally **stubs** during the foundation
-> phase (see the `.tf` files here). They are filled in during Phase 1 of the roadmap,
-> and the **public** version always stays sanitized.
-
-## How a replicator uses this
+## Setup & Deployment
 
 1. Copy `terraform.tfvars.example` to `terraform.tfvars` and fill in **your own** values.
    (`*.tfvars` is git-ignored so your real values never get committed.)
@@ -38,7 +35,7 @@ The target architecture from the [PRD](../docs/PRD.md):
    a file in any repo.
 4. Review, `terraform plan`, then apply in your own AWS account.
 
-## Hard rules for this directory
+## Hard Rules
 
 - ❌ No real account IDs, ARNs, domain names, KMS keys, or endpoints.
 - ❌ No `*.tfstate`, `*.tfvars` (only `*.tfvars.example`), `.env`, or credentials.
