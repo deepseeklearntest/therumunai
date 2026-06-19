@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node esbuild.config.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test \"src/**/*.test.ts\""
+    "test": "find src -name '*.test.ts' -print0 | xargs -0 node --import tsx --test"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.577.0",

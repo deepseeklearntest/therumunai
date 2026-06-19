@@ -6,7 +6,7 @@
   "scripts": {
     "migrate": "node run-migrations.mjs",
     "seed": "node generate-placeholder-zones.mjs",
-    "test": "node --import tsx --test \"test/**/*.test.ts\""
+    "test": "find test -name '*.test.ts' -print0 | xargs -0 node --import tsx --test"
   },
   "dependencies": {
     "pg": "^8.12.0"
