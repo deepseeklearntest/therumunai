@@ -5,7 +5,7 @@
 | **Phase** | 2 — Database |
 | **PRD ref** | §7 Geospatial logic, §10 roadmap row "Phase 2" |
 | **ADR ref** | [001](../adr/001-infrastructure-choices.md) (RDS PostgreSQL 16.1 + PostGIS, `db.t4g.micro`) |
-| **Status** | Planned — not started |
+| **Status** | Built & verified against PostGIS 16-3.4 (12/12 tests green). **BLOCKER-1 open:** placeholder polygons + unreviewed Tamil names before production. |
 | **Goal** | Replace the bounding-box / mock-write stubs in `services/submit` with a real PostGIS schema, zone seed data, and `ST_Contains()` zone tagging. |
 
 ---
@@ -89,10 +89,13 @@ LIMIT 1;
 
 ## 6. Definition of Done
 
-- [ ] `db/migrations` apply cleanly on a fresh Postgres 16 + PostGIS; idempotent re-run safe.
-- [ ] 20 zones seeded, all bilingual, all `ST_IsValid`.
-- [ ] Lambda persists & reads real reports; `determineZone` stub deleted.
-- [ ] Madurai/out-of-boundary submission succeeds as "Other TN Region" (HARD RULE 5).
-- [ ] `npm run typecheck && npm run build` and DB tests green in CI.
-- [ ] No secrets/PII/real-coords committed (HARD RULE 1); disclosure footer untouched.
-- [ ] ADR addendum if any §4 decision diverges from ADR 001.
+- [x] `db/migrations` apply cleanly on a fresh Postgres 16 + PostGIS; idempotent re-run safe (`schema_migrations`).
+- [x] 20 zones seeded, all bilingual. *(Placeholder geometries — BLOCKER-1.)*
+- [x] Lambda persists & reads real reports; `determineZone` stub deleted.
+- [x] Madurai/out-of-boundary submission succeeds as "Other TN Region" (HARD RULE 5) — covered by tests.
+- [x] `npm run typecheck && npm run build` and DB tests green; CI runs a postgis service + migrate step.
+- [x] No secrets/PII/real-coords committed (HARD RULE 1); disclosure footer untouched.
+- [ ] **BLOCKER-1:** replace placeholder polygons with authoritative GCC/CCMC ward GeoJSON; native-review Tamil zone names. *(Required before production launch, not before merge.)*
+- [ ] ADR addendum: none needed — all §4 decisions are consistent with ADR 001.
+
+> **Verified with:** `docker run postgis/postgis:16-3.4` → `npm run migrate -w db` → `npm test` (12/12).
