@@ -79,6 +79,8 @@ LIMIT 1;
 - **Boundary GeoJSON — DECIDED (with tracked blocker):** seed with **clearly-flagged simplified placeholder polygons** (axis-aligned boxes approximating each zone) so the path works end-to-end without claiming false precision. Each seeded row carries `is_placeholder = true`. **BLOCKER-1:** replace with authoritative GCC/CCMC ward GeoJSON (OpenCity / data.gov.in) before production launch — see DoD.
 - **Connection mgmt:** Lambda + RDS → use a module-scoped pooled client (warm reuse) or RDS Proxy later; a `t4g.micro` has limited `max_connections`. Start with a single reused client, `connectionTimeoutMillis` set, and graceful fallback on DB error.
 - **Tamil zone names** must be verified by a Tamil reader, not machine-translated blindly.
+- **Phase 4 dependency — bilingual zone labels:** `municipal_zones.zone_name_ta` is stored, but `zone_tag.sql` and `reports.zone` only carry the English label. The Phase 4 dashboard will need to join back to `municipal_zones` (or have the API return `zone_name_ta`) to render Tamil zone names (HARD RULE 4). Flagged now so it isn't discovered late.
+- **Deploy packaging:** the Lambda bundle is CommonJS while the workspace is `type: module`; `esbuild.config.mjs` emits `dist/package.json {"type":"commonjs"}` so Node/Lambda don't misread the bundle as ESM (which silently exports nothing). The private-repo packaging must zip the whole `dist/` (incl. that file).
 
 ## 5. Test plan (before ship)
 

@@ -1,5 +1,6 @@
-import { test, before } from "node:test";
+import { test, before, after } from "node:test";
 import assert from "node:assert/strict";
+import pg from "pg";
 
 // Integration test: requires a live PostGIS (migrated) reachable via env.
 // Defaults target the local throwaway container on port 55432.
@@ -10,9 +11,25 @@ process.env.DB_USER ||= "postgres";
 process.env.DB_PASS ||= "devpass";
 
 let handler: typeof import("./index.js").handler;
+const insertedIds: string[] = [];
 
 before(async () => {
   ({ handler } = await import("./index.js"));
+});
+
+// Remove rows this suite inserted so local reruns don't accumulate.
+after(async () => {
+  if (insertedIds.length === 0) return;
+  const c = new pg.Client({
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+  });
+  await c.connect();
+  await c.query("DELETE FROM reports WHERE id = ANY($1)", [insertedIds]);
+  await c.end();
 });
 
 function postReport(body: object) {
@@ -34,6 +51,7 @@ test("POST /reports persists a Chennai report and tags the zone", async () => {
   );
   assert.equal(res.statusCode, 201);
   const data = JSON.parse(res.body);
+  insertedIds.push(data.id);
   assert.equal(data.city, "Chennai");
   assert.match(data.id, /^[0-9a-f-]{36}$/); // real DB uuid, not the old mock id
 });
@@ -49,6 +67,7 @@ test("POST /reports outside both cities falls back to Other TN Region (HARD RULE
   );
   assert.equal(res.statusCode, 201);
   const data = JSON.parse(res.body);
+  insertedIds.push(data.id);
   assert.equal(data.city, "Other TN Region");
 });
 
