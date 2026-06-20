@@ -9,7 +9,7 @@
     "test": "find test -name '*.test.ts' -print0 | xargs -0 node --import tsx --test"
   },
   "dependencies": {
-    "pg": "^8.12.0"
+    "pg": "^8.22.0"
   },
   "devDependencies": {
     "@types/pg": "^8.11.6",
