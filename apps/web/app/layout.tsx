@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { LanguageProvider } from "./i18n/LanguageProvider";
 import { LanguageToggle } from "./components/LanguageToggle";
+import { MapViewLink } from "./components/MapViewLink";
 import { DisclosureFooter } from "./components/DisclosureFooter";
 
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ export default function RootLayout({
         <LanguageProvider>
           <header className="flex items-center justify-between border-b border-gray-200 px-4 py-3">
             <span className="text-lg font-bold">Therumunai · தெருமுனை</span>
-            <LanguageToggle />
+            <div className="flex items-center gap-2">
+              <MapViewLink />
+              <LanguageToggle />
+            </div>
           </header>
           <main className="flex-1">{children}</main>
           <DisclosureFooter />

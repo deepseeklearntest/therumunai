@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { ApiError, getPresignedUrl, submitReport, uploadPhoto } from "./api";
+import { ApiError, getPresignedUrl, listReports, submitReport, uploadPhoto } from "./api";
 
 const ORIGINAL_ENV = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -140,5 +140,46 @@ describe("submitReport", () => {
         { field: "latitude", message: "Latitude must be a number" },
       ]);
     }
+  });
+});
+
+describe("listReports", () => {
+  it("calls GET /reports and returns the parsed array", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => [
+        {
+          id: "1",
+          category: "garbage",
+          latitude: 13.0827,
+          longitude: 80.2707,
+          photoKey: "photos/2026/06/abc.jpg",
+          city: "Chennai",
+          zone: "Zone 5 - Anna Nagar",
+          timestamp: "2026-06-19T00:00:00.000Z",
+          status: "submitted",
+        },
+      ],
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const result = await listReports();
+
+    expect(fetchMock).toHaveBeenCalledWith("https://api.example.com/reports", {
+      method: "GET",
+    });
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("1");
+  });
+
+  it("throws ApiError on non-ok response", async () => {
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ error: "Internal server error" }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    await expect(listReports()).rejects.toBeInstanceOf(ApiError);
   });
 });

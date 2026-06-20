@@ -63,10 +63,15 @@ export interface ReportListItem {
   status: string;
 }
 
+// Public read path. Coordinates are rounded to 4 decimal places (~10m) so the
+// public map never exposes the full-precision GPS fix a reporter stood at
+// (HARD RULE 1: no real coordinates tied to individuals). Stored geometry
+// keeps full precision — only this public projection rounds.
 export async function listReports(limit = 200): Promise<ReportListItem[]> {
   const { rows } = await getPool().query(
     `SELECT id, category, photo_key,
-            ST_Y(geom) AS latitude, ST_X(geom) AS longitude,
+            ROUND(ST_Y(geom)::numeric, 4) AS latitude,
+            ROUND(ST_X(geom)::numeric, 4) AS longitude,
             city, zone, status, created_at
      FROM reports
      ORDER BY created_at DESC

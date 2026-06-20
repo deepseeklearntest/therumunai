@@ -71,6 +71,17 @@ export interface Dictionary {
   successZoneLabel: string;
   successZoneUnavailable: string;
   successReportAnother: string;
+
+  mapViewLink: string;
+  mapTitle: string;
+  mapLoading: string;
+  mapError: string;
+  mapEmpty: string;
+  mapNoFilterMatch: string;
+  mapLegendTitle: string;
+  mapFilterAll: string;
+  mapPopupReportedOn: string;
+  mapPopupZoneUnavailable: string;
 }
 
 export const en: Dictionary = {
@@ -145,6 +156,17 @@ export const en: Dictionary = {
   successZoneLabel: "Zone",
   successZoneUnavailable: "Zone not available for this location",
   successReportAnother: "Report another issue",
+
+  mapViewLink: "View the map",
+  mapTitle: "Reported issues map",
+  mapLoading: "Loading reports...",
+  mapError: "Could not load reports. Please try again.",
+  mapEmpty: "No reports yet.",
+  mapNoFilterMatch: "No reports match the selected categories.",
+  mapLegendTitle: "Categories",
+  mapFilterAll: "All",
+  mapPopupReportedOn: "Reported on",
+  mapPopupZoneUnavailable: "Zone not available for this location",
 };
 
 export const ta: Dictionary = {
@@ -219,6 +241,17 @@ export const ta: Dictionary = {
   successZoneLabel: "மண்டலம்",
   successZoneUnavailable: "இந்த இருப்பிடத்திற்கு மண்டலம் கிடைக்கவில்லை",
   successReportAnother: "மற்றொரு சிக்கலைப் புகாரளிக்கவும்",
+
+  mapViewLink: "வரைபடத்தைக் காண்க",
+  mapTitle: "புகாரளிக்கப்பட்ட சிக்கல்களின் வரைபடம்",
+  mapLoading: "புகார்கள் ஏற்றப்படுகின்றன...",
+  mapError: "புகார்களை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+  mapEmpty: "இதுவரை புகார்கள் இல்லை.",
+  mapNoFilterMatch: "தேர்ந்தெடுக்கப்பட்ட வகைகளுக்குப் பொருந்தும் புகார்கள் இல்லை.",
+  mapLegendTitle: "வகைகள்",
+  mapFilterAll: "அனைத்தும்",
+  mapPopupReportedOn: "புகாரளிக்கப்பட்ட தேதி",
+  mapPopupZoneUnavailable: "இந்த இருப்பிடத்திற்கு மண்டலம் கிடைக்கவில்லை",
 };
 
 export const dictionaries: Record<Lang, Dictionary> = { en, ta };

@@ -28,6 +28,18 @@ export interface SubmitReportResponse {
   disclosure: string;
 }
 
+export interface ReportListItem {
+  id: string;
+  category: Category;
+  latitude: number;
+  longitude: number;
+  photoKey: string;
+  city: string;
+  zone: string | null;
+  timestamp: string;
+  status: string;
+}
+
 export interface ValidationError {
   field: string;
   message: string;
@@ -111,4 +123,14 @@ export async function submitReport(
   }
 
   return (await response.json()) as SubmitReportResponse;
+}
+
+export async function listReports(): Promise<ReportListItem[]> {
+  const response = await fetch(`${getApiBaseUrl()}/reports`, { method: "GET" });
+
+  if (!response.ok) {
+    throw await parseErrorResponse(response);
+  }
+
+  return (await response.json()) as ReportListItem[];
 }
