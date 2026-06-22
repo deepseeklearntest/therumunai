@@ -30,10 +30,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   // Restore the persisted choice on mount. We deliberately only use
   // localStorage (no cookies, no analytics, no PII) per CLAUDE.md.
+  // Deferred to an effect (rather than lazy useState init) so the static
+  // export's prerendered "en" markup matches the first client render.
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
       if (isLang(stored)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional mount-only sync from localStorage, see comment above
         setLangState(stored);
       }
     } catch {
