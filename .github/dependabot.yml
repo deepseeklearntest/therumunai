@@ -21,6 +21,10 @@ updates:
       prefix: chore
     labels:
       - dependencies
+    ignore:
+      - dependency-name: eslint
+        update-types:
+          - version-update:semver-major
     groups:
       minor-and-patch:
         update-types:
